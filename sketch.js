@@ -1,3 +1,9 @@
+let multiCircles = [];
+let innerMultiCircleNum = 15; // 内圈同心圆数量 Number of inner concentric circles
+let layerNum = 8; // 外圈层数 Number of outer layers
+let dotSize = 20; // 波点大小 Size of the dots
+let dotDensity = 30; // 波点密度 Density of the dots
+
 class MultiCircle {
   // 构造函数，初始化multiCircle的属性
   // Constructor to initialize the properties of multiCircle
@@ -51,109 +57,38 @@ class MultiCircle {
   }
 }
 
-class Clock {
-  // 构造函数，初始化时钟的属性
-  // Constructor to initialize the properties of the clock
-  constructor(x, y, radius, colors) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.colors = colors;
-  }
-
-  // 显示时钟
-  // Display the clock
-  display() {
-    // 绘制同心圆
-    // Draw concentric circles
-    //noFill();
-    fill(155,154,157);
-    for (let i = this.colors.length - 1; i >= 0; i--) {
-      stroke(this.colors[i]);
-      strokeWeight(30);
-      ellipse(this.x, this.y, this.radius * (i + 1) / this.colors.length * 2);
-    }
-
-    // 绘制时钟指针
-    // Draw clock hands
-    let hr = hour() % 12;
-    let mn = minute();
-    let sc = second();
-
-    let secondAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
-    let minuteAngle = map(mn, 0, 60, 0, TWO_PI) - HALF_PI;
-    let hourAngle = map(hr + mn / 60, 0, 12, 0, TWO_PI) - HALF_PI;
-
-    stroke(255);
-    strokeWeight(8);
-    line(this.x, this.y, this.x + cos(hourAngle) * this.radius * 0.5, this.y + sin(hourAngle) * this.radius * 0.5);
-
-    strokeWeight(4);
-    line(this.x, this.y, this.x + cos(minuteAngle) * this.radius * 0.8, this.y + sin(minuteAngle) * this.radius * 0.8);
-  }
-}
-
-let multiCircles = [];
-let clock;
-let innerMultiCircleNum = 15; // 内圈同心圆数量 Number of inner concentric circles
-let layerNum = 8; // 外圈层数 Number of outer layers
-
 function setup() {
   createCanvas(800, 800);
-  let maxRadius = 100;
-  let spacing = maxRadius * 2;
-  let cols = floor(width / spacing);
-  let rows = floor(height / spacing);
 
-  // 生成边框位置的multiCircle
-  // Generate multiCircles at border positions
-  for (let i = 0; i < cols; i++) {
-    let x = i * spacing + maxRadius;
-    let yTop = maxRadius;
-    let yBottom = height - maxRadius;
-    multiCircles.push(new MultiCircle(x, yTop, maxRadius, innerMultiCircleNum, layerNum));
-    multiCircles.push(new MultiCircle(x, yBottom, maxRadius, innerMultiCircleNum, layerNum));
+  // 生成随机位置的multiCircle
+  // Generate multiCircles at random positions
+  for (let i = 0; i < 20; i++) {
+    let x = random(width);
+    let y = random(height);
+    let maxRadius = random(150, 300);
+    multiCircles.push(new MultiCircle(x, y, maxRadius, innerMultiCircleNum, layerNum));
   }
-
-  for (let j = 1; j < rows - 1; j++) {
-    let y = j * spacing + maxRadius;
-    let xLeft = maxRadius;
-    let xRight = width - maxRadius;
-    multiCircles.push(new MultiCircle(xLeft, y, maxRadius, innerMultiCircleNum, layerNum));
-    multiCircles.push(new MultiCircle(xRight, y, maxRadius, innerMultiCircleNum, layerNum));
-  }
-
-  // 初始化时钟
-  // Initialize the clock
-  let darkColors = ['#2F4F4F', '#696969', '#708090', '#778899'];
-  clock = new Clock(width / 2, height / 2, 200, darkColors);
 }
 
 function draw() {
-  background(0);
-  drawSpiralBackground();
+  background(255);
+  drawPolkaDotBackground();
+  
   // 显示所有multiCircle
   // Display all multiCircles
   for (let mc of multiCircles) {
     mc.display();
   }
-  // 显示时钟
-  // Display the clock
-  clock.display();
 }
 
-function drawSpiralBackground() {
-  // 绘制螺旋背景
-  // Draw spiral background
-  stroke(255);
-  strokeWeight(20);
-  noFill();
-  let angleStep = 2;
-  let maxRadius = max(width, height);
-  for (let angle = 0; angle < 360 * 10; angle += angleStep) {
-    let rad = map(angle, 0, 360 * 10, 0, maxRadius);
-    let x = width / 2 + cos(radians(angle)) * rad;
-    let y = height / 2 + sin(radians(angle)) * rad;
-    point(x, y);
+function drawPolkaDotBackground() {
+  // 绘制红色波点背景
+  // Draw red polka dot background
+  fill(255, 0, 0);
+  noStroke();
+  for (let y = 0; y < height; y += dotDensity) {
+    for (let x = 0; x < width; x += dotDensity) {
+      ellipse(x, y, dotSize);
+    }
   }
 }
