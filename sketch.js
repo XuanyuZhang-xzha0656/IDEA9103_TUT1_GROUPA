@@ -16,16 +16,19 @@ class MultiCircle {
     this.dotRadius = 5;
     // Allowed colors for inner concentric circles
     this.innerAllowedColors = [
-      color(38, 77, 92),
-      color(201, 158, 211),
-      color(121, 126, 122),
-      color(213, 39, 41),
+      color(87, 98, 100),
+      color(180, 172, 153),
+      color(128, 128, 98),
+      color(175, 146, 116),
+      color(145, 73, 63)
     ];
     // Allowed colors for outer dots
     this.outerAllowedColors = [
-      color(227, 121, 35),
-      color(77, 180, 141),
-      color(51, 132, 186)
+      color(221, 211, 143),
+      color(198, 177, 107),
+      color(124, 167, 195),
+      color(141, 164, 189),
+      color(228, 122, 77),
     ];
     // Generate random colors for inner circles and outer dots
     this.innerColors = this.generateRandomColors(innerMultiCircleNum, this.innerAllowedColors);
@@ -51,7 +54,7 @@ class MultiCircle {
     let outerRadius = this.innerRadius + this.layerNum * this.dotRadius * 2;
 
     // Draw the background circle with no stroke
-    fill(255);
+    fill(231, 231, 224);
     noStroke();
     ellipse(this.x, this.y, outerRadius * 2);
 
@@ -102,7 +105,7 @@ function draw() {
 
 function drawPolkaDotBackground() {
   // Draw red polka dot background
-  fill(255, 74, 0);
+  fill(193, 110, 74);
   noStroke();
   for (let y = 0; y < height; y += dotDensity) {
     for (let x = 0; x < width; x += dotDensity) {
