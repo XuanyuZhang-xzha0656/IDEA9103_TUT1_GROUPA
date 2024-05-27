@@ -82,13 +82,13 @@ class MultiCircle {
 }
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(windowWidth, windowHeight);
 
   // Generate multiCircles at random positions
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     let x = random(width);
     let y = random(height);
-    let maxRadius = random(50, 200);
+    let maxRadius = random(100, 200);
     multiCircles.push(new MultiCircle(x, y, maxRadius, innerMultiCircleNum, layerNum));
   }
 }
@@ -112,4 +112,8 @@ function drawPolkaDotBackground() {
       ellipse(x, y, dotSize);
     }
   }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
