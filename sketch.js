@@ -1,4 +1,5 @@
 let multiCircles = [];
+let multiCircleNum = 20;// Number of multiCircles
 let innerMultiCircleNum = 10; // Number of inner concentric circles
 let layerNum = 5; // Number of outer layers
 let dotSize = 10; // Size of the dots
@@ -85,7 +86,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
   // Generate multiCircles at random positions
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < multiCircleNum; i++) {
     let x = random(width);
     let y = random(height);
     let maxRadius = random(100, 200);
@@ -104,7 +105,7 @@ function draw() {
 }
 
 function drawPolkaDotBackground() {
-  // Draw red polka dot background
+  // Draw polka dot background
   fill(193, 110, 74);
   noStroke();
   for (let y = 0; y < height; y += dotDensity) {
